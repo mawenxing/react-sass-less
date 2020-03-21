@@ -75,3 +75,5 @@ const lessModuleRegex = /\.module\.less$/
 },
 ```
 
+
+#### 5. 创建一个 .less 文件 , 引入即可
