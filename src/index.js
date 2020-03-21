@@ -2,6 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
+import './index.less'
 
 //2. 类组件
 class Child extends React.Component {
@@ -10,7 +11,7 @@ class Child extends React.Component {
     return (
       <div>
         <div className="one">测试 sass</div>
-        <div className="">测试 less</div>
+        <div className="two">测试 less</div>
       </div>
     )
   }

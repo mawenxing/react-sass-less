@@ -24,10 +24,54 @@ import './index.scss'
 yarn add less less-loader 
 ```
 
-#### 3. 修改配置
-> 在module中做了三处修改 
-- 第一处是找到 `test: /\.css$/` 将其改为 `test: /\.(css|less)$/`
+#### 3. 仿 sass 添加一个 less 正则
+```js
+const cssRegex = /\.(css)$/
+const cssModuleRegex = /\.module\.css$/
+const sassRegex = /\.(scss|sass)$/
+const sassModuleRegex = /\.module\.(scss|sass)$/
+// ************** 新加 less *****************
+const lessRegex = /\.less$/
+const lessModuleRegex = /\.module\.less$/
+// ************** 新加 less *****************
+```
 
-- 第二处是增加 `less-loader`的配置 
+#### 4. 仿 sass 添加一个 less 配置
+```js
+// 之前的 sass 的配置
+{
+  test: sassRegex,
+  ....
+},
+{
+  test: sassModuleRegex,
+  ....
+},
+// 新加的 less 配置
+{
+  test: lessRegex,  // 新加
+  exclude: lessModuleRegex,  // 新加
+  use: getStyleLoaders(
+    {
+      importLoaders: 3,
+      sourceMap: isEnvProduction && shouldUseSourceMap
+    },
+    'less-loader'   // 新加
+  ),
+  sideEffects: true
+},
+{
+  test: lessModuleRegex,  // 新加
+  use: getStyleLoaders(
+    {
+      importLoaders: 3,
+      sourceMap: isEnvProduction && shouldUseSourceMap,
+      modules: {
+        getLocalIdent: getCSSModuleLocalIdent
+      }
+    },
+    'less-loader'    // 新加
+  )
+},
+```
 
-- 第三处是在exclude属性中增加 `/\.(css|less)$/`
